@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendar</h1>
+    <label for="year">Year:</label>
+    <input type="number" id="year" value="2024">
+    <label for="month">Month:</label>
+    <input type="number" id="month" min="1" max="12" value="1">
+    <button onclick="generateCalendar()">Generate</button>
+    <div id="calendar"></div>
+
+    <script>
+        function generateCalendar() {
+            const year = document.getElementById('year').value;
+            const month = document.getElementById('month').value;
+            const calendarDiv = document.getElementById('calendar');
+            const date = new Date(year, month - 1, 1);
+            const firstDay = date.getDay();
+            const daysInMonth = new Date(year, month, 0).getDate();
+            let table = '<table><tr><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th><th>Su</th></tr><tr>';
+            
+            for (let i = 0; i < firstDay; i++) {
+                table += '<td></td>';
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                table += `<td>${day}</td>`;
+                if ((firstDay + day) % 7 === 0) {
+                    table += '</tr><tr>';
+                }
+            }
+            
+            table += '</tr></table>';
+            calendarDiv.innerHTML = table;
+        }
+    </script>
+</body>
+</html>
